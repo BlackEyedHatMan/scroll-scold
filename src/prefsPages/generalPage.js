@@ -59,7 +59,7 @@ export function buildGeneralPage(settings, window) {
 
     const idle = spinRow({
         title: 'Idle pause',
-        subtitle: 'Seconds without input before the timer pauses (note: hands-free video watching counts as idle)',
+        subtitle: 'Seconds without input before the timer pauses (media playback keeps it running — see Detection)',
         lower: 10, upper: 600, step: 5,
     });
     settings.bind('idle-seconds', idle, 'value', Gio.SettingsBindFlags.DEFAULT);
@@ -139,6 +139,13 @@ export function buildGeneralPage(settings, window) {
     });
     settings.bind('restrict-to-browsers', restrict, 'active', Gio.SettingsBindFlags.DEFAULT);
     detection.add(restrict);
+
+    const media = new Adw.SwitchRow({
+        title: 'Media playback counts as activity',
+        subtitle: 'Keep timing while a browser plays audio/video, even with no keyboard/mouse input',
+    });
+    settings.bind('media-counts-as-active', media, 'active', Gio.SettingsBindFlags.DEFAULT);
+    detection.add(media);
 
     const browsers = new Adw.EntryRow({
         title: 'Browser identifiers (comma-separated, matched against window class)',

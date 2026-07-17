@@ -1,6 +1,7 @@
 import GLib from 'gi://GLib';
 
 import {matchPlatform, isBrowserWindow, parsePlatforms} from './matcher.js';
+import {MediaWatcher} from './mediaWatcher.js';
 import {Storage} from './storage.js';
 
 const TICK_SECONDS = 1;
@@ -39,6 +40,8 @@ export class Tracker {
         this._date = Storage.today();
         this._platformsError = false;
         this._idleUnavailable = false;
+
+        this._mediaWatcher = new MediaWatcher();
 
         this._idleMonitor = null;
         try {
@@ -101,6 +104,7 @@ export class Tracker {
         for (const id of this._settingsSignalIds)
             this._settings.disconnect(id);
         this._settingsSignalIds = [];
+        this._mediaWatcher.destroy();
         this._flush();
     }
 
@@ -163,7 +167,14 @@ export class Tracker {
             return false;
         try {
             const idleMs = this._idleMonitor.get_idletime();
-            return idleMs > this._settings.get_int('idle-seconds') * 1000;
+            if (idleMs <= this._settings.get_int('idle-seconds') * 1000)
+                return false;
+            // No input — but a browser playing audio/video (MPRIS) still
+            // counts as activity: hands-free video watching is real use.
+            if (this._settings.get_boolean('media-counts-as-active') &&
+                this._mediaWatcher.isAnyPlaying(this._browserTokens, this._restrictToBrowsers))
+                return false;
+            return true;
         } catch {
             return false;
         }

@@ -63,6 +63,12 @@
       <summary>Absolute path to a custom sound file</summary>
     </key>
 
+    <key name="media-counts-as-active" type="b">
+      <default>true</default>
+      <summary>Media playback counts as activity</summary>
+      <description>While a browser reports playing audio/video (MPRIS), the timers keep running even without keyboard/mouse input — so hands-free video watching is counted.</description>
+    </key>
+
     <key name="restrict-to-browsers" type="b">
       <default>true</default>
       <summary>Only match browser windows</summary>
