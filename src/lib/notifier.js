@@ -51,11 +51,12 @@ export class Notifier {
             return;
 
         const minutes = Math.round(sessionSeconds / 60);
+        const unit = minutes === 1 ? 'minute' : 'minutes';
         const line = SCOLD_LINES[Math.floor(Math.random() * SCOLD_LINES.length)];
         const notification = new MessageTray.Notification({
             source: this._ensureSource(),
             title: 'Scroll Scold',
-            body: `You've hit ${minutes} minutes on ${platform}. ${line}`,
+            body: `You've hit ${minutes} ${unit} on ${platform}. ${line}`,
             gicon: this._appIcon,
             urgency: MessageTray.Urgency.NORMAL,
         });
