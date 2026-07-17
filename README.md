@@ -6,6 +6,8 @@ A GNOME Shell extension that scolds you when doomscrolling sites steal too much 
 
 Scroll Scold sits in your top bar as an angry little bell. When you spend too long **actively** on a social media site — in any browser, any Chrome profile — it rings: a notification ("You've hit 15 minutes on YouTube. That's enough rabbit holes for now.") plus a scolding chime.
 
+**Website:** [scrollscold.app](https://scrollscold.app)
+
 ## Features
 
 - **Top-bar indicator** with six states: normal, approaching limit (≥80%), limit reached, muted, paused, and error.
