@@ -57,6 +57,12 @@ class ScrollScoldIndicator extends PanelMenu.Button {
             can_focus: false,
             style_class: 'scroll-scold-header',
         });
+        header.add_child(new St.Icon({
+            gicon: Gio.icon_new_for_string(GLib.build_filenamev(
+                [this._extension.path, 'icons', 'scroll-scold.svg'])),
+            icon_size: 20,
+            y_align: Clutter.ActorAlign.CENTER,
+        }));
         header.add_child(new St.Label({
             text: 'Scroll Scold',
             style: 'font-weight: bold;',
