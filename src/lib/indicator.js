@@ -62,7 +62,7 @@ class ScrollScoldIndicator extends PanelMenu.Button {
         header.add_child(new St.Icon({
             gicon: Gio.icon_new_for_string(GLib.build_filenamev(
                 [this._extension.path, 'icons', 'scroll-scold.png'])),
-            icon_size: 20,
+            icon_size: 60,
             y_align: Clutter.ActorAlign.CENTER,
         }));
         header.add_child(new St.Label({

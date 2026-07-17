@@ -10,17 +10,31 @@ import {Tracker} from './lib/tracker.js';
 import {Indicator} from './lib/indicator.js';
 import {Notifier} from './lib/notifier.js';
 
+// True until the first enable() in this GNOME Shell process. The lock screen
+// disables/re-enables extensions within the SAME process, while a logout
+// starts a new one — so this flag distinguishes a fresh login (reset the
+// timers) from a mere unlock (keep them).
+let freshLogin = true;
+
 export default class ScrollScoldExtension extends Extension {
     enable() {
         this._settings = this.getSettings();
         this._quitIdleId = null;
 
         this._storage = new Storage();
+        let todaySeconds;
+        if (freshLogin) {
+            freshLogin = false;
+            todaySeconds = {};
+            this._storage.save({});
+        } else {
+            todaySeconds = this._storage.load().seconds;
+        }
         this._engine = new SessionEngine({
             thresholdSeconds: this._settings.get_int('threshold-minutes') * 60,
             graceSeconds: this._settings.get_int('grace-seconds'),
             snoozeSeconds: this._settings.get_int('snooze-minutes') * 60,
-            todaySeconds: this._storage.load().seconds,
+            todaySeconds,
         });
 
         this._notifier = new Notifier({

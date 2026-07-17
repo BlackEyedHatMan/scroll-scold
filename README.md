@@ -50,7 +50,7 @@ Open settings with the bell menu's **Preferences** (or `gnome-extensions prefs s
 | Platforms | YouTube, X, Facebook, Instagram, TikTok, Reddit | Editable; keywords match the tab title. End a keyword with `$` to require it at the end of the title (X uses `/ x$` so a bare "x" can't match everything) |
 | Browser identifiers | chrome, chromium, firefox, brave, edge, opera, vivaldi, librewolf, zen, epiphany | Substring-matched against the focused window's class — Chrome profile windows ("google-chrome (Profile 1)") are covered |
 
-Today's usage is stored in `~/.local/state/scroll-scold/usage.json` and resets at midnight (or via **Reset today**).
+Today's usage is stored in `~/.local/state/scroll-scold/usage.json` and resets at midnight, on logout/login, or via **Reset today**. (Locking the screen does *not* reset it.)
 
 ## Development
 

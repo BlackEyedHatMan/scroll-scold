@@ -41,6 +41,14 @@ export function buildGeneralPage(settings, window) {
     settings.bind('threshold-minutes', threshold, 'value', Gio.SettingsBindFlags.DEFAULT);
     limits.add(threshold);
 
+    const snooze = spinRow({
+        title: 'Snooze duration',
+        subtitle: 'Minutes the "Snooze" notification button delays the next scold',
+        lower: 1, upper: 60,
+    });
+    settings.bind('snooze-minutes', snooze, 'value', Gio.SettingsBindFlags.DEFAULT);
+    limits.add(snooze);
+
     const grace = spinRow({
         title: 'Grace period',
         subtitle: 'Seconds away from a platform before its session timer resets',
@@ -61,14 +69,6 @@ export function buildGeneralPage(settings, window) {
 
     // --- Alerts ---
     const alerts = new Adw.PreferencesGroup({title: 'Alerts'});
-
-    const snooze = spinRow({
-        title: 'Snooze duration',
-        subtitle: 'Minutes the "Snooze" notification button delays the next scold',
-        lower: 1, upper: 60,
-    });
-    settings.bind('snooze-minutes', snooze, 'value', Gio.SettingsBindFlags.DEFAULT);
-    alerts.add(snooze);
 
     const mute = new Adw.SwitchRow({
         title: 'Mute alerts',
