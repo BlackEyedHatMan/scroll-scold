@@ -4,7 +4,7 @@
           path="/org/gnome/shell/extensions/scroll-scold/">
 
     <key name="platforms" type="s">
-      <default>'[{"name": "YouTube", "rules": [{"mode": "contains", "value": "youtube"}]}, {"name": "X (Twitter)", "rules": [{"mode": "suffix", "value": "/ x"}, {"mode": "contains", "value": "twitter"}]}, {"name": "Facebook", "rules": [{"mode": "contains", "value": "facebook"}]}, {"name": "Instagram", "rules": [{"mode": "contains", "value": "instagram"}]}, {"name": "TikTok", "rules": [{"mode": "contains", "value": "tiktok"}]}, {"name": "Reddit", "rules": [{"mode": "contains", "value": "reddit"}]}]'</default>
+      <default>'[{"name": "YouTube", "color": "#ff0000", "rules": [{"mode": "contains", "value": "youtube"}]}, {"name": "X (Twitter)", "color": "#0f1419", "rules": [{"mode": "suffix", "value": "/ x"}, {"mode": "contains", "value": "twitter"}]}, {"name": "Facebook", "color": "#1877f2", "rules": [{"mode": "contains", "value": "facebook"}]}, {"name": "Instagram", "color": "#dd2a7b", "rules": [{"mode": "contains", "value": "instagram"}]}, {"name": "TikTok", "color": "#161823", "rules": [{"mode": "contains", "value": "tiktok"}]}, {"name": "Reddit", "color": "#ff4500", "rules": [{"mode": "contains", "value": "reddit"}]}]'</default>
       <summary>Monitored platforms</summary>
       <description>JSON array of platforms. Each entry: {"name": string, "rules": [{"mode": "contains"|"suffix", "value": string}]}. A platform is considered active when the focused browser window's title (after stripping the browser suffix) matches any rule.</description>
     </key>

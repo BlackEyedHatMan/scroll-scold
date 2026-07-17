@@ -7,7 +7,9 @@ import St from 'gi://St';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 
-import {IndicatorState} from './constants.js';
+import {
+    IndicatorState, USAGE_COLOR, platformBadgeColor, platformMonogram,
+} from './constants.js';
 
 export const Indicator = GObject.registerClass(
 class ScrollScoldIndicator extends PanelMenu.Button {
@@ -133,8 +135,24 @@ class ScrollScoldIndicator extends PanelMenu.Button {
     setPlatforms(platforms) {
         this._platformSection.removeAll();
         this._usageLabels.clear();
-        for (const {name} of platforms) {
+        for (const platform of platforms) {
+            const {name} = platform;
             const item = new PopupMenu.PopupBaseMenuItem({reactive: false, can_focus: false});
+            // colored monogram badge (e.g. red "Y" for YouTube)
+            const badge = new St.Bin({
+                style: `background-color: ${platformBadgeColor(platform)}; ` +
+                    'border-radius: 6px; width: 22px; height: 22px;',
+                y_align: Clutter.ActorAlign.CENTER,
+                child: new St.Label({
+                    text: platformMonogram(name),
+                    style: 'color: white; font-weight: bold; font-size: 12px;',
+                    x_expand: true,
+                    y_expand: true,
+                    x_align: Clutter.ActorAlign.CENTER,
+                    y_align: Clutter.ActorAlign.CENTER,
+                }),
+            });
+            item.add_child(badge);
             item.add_child(new St.Label({
                 text: name,
                 x_expand: true,
@@ -142,7 +160,7 @@ class ScrollScoldIndicator extends PanelMenu.Button {
             }));
             const usage = new St.Label({
                 y_align: Clutter.ActorAlign.CENTER,
-                opacity: 160,
+                style: `color: ${USAGE_COLOR}; font-weight: 600;`,
             });
             item.add_child(usage);
             this._platformSection.addMenuItem(item);

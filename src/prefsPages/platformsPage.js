@@ -83,6 +83,25 @@ export function buildPlatformsPage(settings) {
             });
             row.add_row(keywordsRow);
 
+            const colorRow = new Adw.EntryRow({
+                title: 'Badge color (hex, e.g. #ff0000 — empty = automatic)',
+                text: platform.color ?? '',
+                show_apply_button: true,
+            });
+            colorRow.connect('apply', () => {
+                const platformsNow = read();
+                if (!platformsNow[index])
+                    return;
+                const value = colorRow.text.trim();
+                if (value === '')
+                    delete platformsNow[index].color;
+                else
+                    platformsNow[index].color = value;
+                write(platformsNow);
+                rebuild();
+            });
+            row.add_row(colorRow);
+
             const deleteRow = new Adw.ActionRow({title: 'Remove this platform'});
             const deleteButton = new Gtk.Button({
                 icon_name: 'user-trash-symbolic',

@@ -9,7 +9,7 @@ Scroll Scold sits in your top bar as an angry little bell. When you spend too lo
 ## Features
 
 - **Top-bar indicator** with six states: normal, approaching limit (≥80%), limit reached, muted, paused, and error.
-- **Popup menu** showing today's time per platform ("YouTube — 12 / 15 min"), Monitoring and Mute alerts toggles, Reset today, Preferences, and About.
+- **Popup menu** showing today's time per platform ("YouTube — 12 / 15 min") with a colored monogram badge per platform (custom hex color per platform, or automatic), Monitoring and Mute alerts toggles, Reset today, Preferences, and About.
 - **Active-use timing**: the timer for a platform runs only while its tab is focused. Quick tab-flicks can't dodge the scold (a configurable grace period, default 60 s, must pass before the session resets), but genuinely leaving the site does reset it. Repeated short visits never add up to a false scold.
 - **Idle-aware**: no keyboard/mouse input (default 60 s) pauses the timers.
 - **Notification with actions**: *Snooze* (configurable, default 2 min) re-scolds shortly after if you're still there; *Got it* waits a full threshold before scolding again.
