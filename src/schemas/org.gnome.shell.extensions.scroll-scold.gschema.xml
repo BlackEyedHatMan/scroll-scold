@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="scroll-scold">
+  <schema id="org.gnome.shell.extensions.scroll-scold"
+          path="/org/gnome/shell/extensions/scroll-scold/">
+
+    <key name="platforms" type="s">
+      <default>'[{"name": "YouTube", "rules": [{"mode": "contains", "value": "youtube"}]}, {"name": "X (Twitter)", "rules": [{"mode": "suffix", "value": "/ x"}, {"mode": "contains", "value": "twitter"}]}, {"name": "Facebook", "rules": [{"mode": "contains", "value": "facebook"}]}, {"name": "Instagram", "rules": [{"mode": "contains", "value": "instagram"}]}, {"name": "TikTok", "rules": [{"mode": "contains", "value": "tiktok"}]}, {"name": "Reddit", "rules": [{"mode": "contains", "value": "reddit"}]}]'</default>
+      <summary>Monitored platforms</summary>
+      <description>JSON array of platforms. Each entry: {"name": string, "rules": [{"mode": "contains"|"suffix", "value": string}]}. A platform is considered active when the focused browser window's title (after stripping the browser suffix) matches any rule.</description>
+    </key>
+
+    <key name="threshold-minutes" type="i">
+      <range min="1" max="480"/>
+      <default>15</default>
+      <summary>Session threshold in minutes</summary>
+      <description>Continuous active minutes on a platform before Scroll Scold notifies.</description>
+    </key>
+
+    <key name="grace-seconds" type="i">
+      <range min="5" max="600"/>
+      <default>60</default>
+      <summary>Away grace period in seconds</summary>
+      <description>How long you can be away from a platform before its session timer resets to zero. Shorter absences only pause the timer.</description>
+    </key>
+
+    <key name="idle-seconds" type="i">
+      <range min="10" max="600"/>
+      <default>60</default>
+      <summary>Idle pause threshold in seconds</summary>
+      <description>If no keyboard/mouse input for this long, session timers pause.</description>
+    </key>
+
+    <key name="monitoring-enabled" type="b">
+      <default>true</default>
+      <summary>Monitoring enabled</summary>
+    </key>
+
+    <key name="mute-alerts" type="b">
+      <default>false</default>
+      <summary>Mute alerts</summary>
+      <description>Suppress notifications and sound; timers keep running.</description>
+    </key>
+
+    <key name="play-sound" type="b">
+      <default>true</default>
+      <summary>Play a sound with the scold notification</summary>
+    </key>
+
+    <key name="use-custom-sound" type="b">
+      <default>false</default>
+      <summary>Use a custom sound file</summary>
+    </key>
+
+    <key name="custom-sound-path" type="s">
+      <default>''</default>
+      <summary>Absolute path to a custom sound file</summary>
+    </key>
+
+    <key name="restrict-to-browsers" type="b">
+      <default>true</default>
+      <summary>Only match browser windows</summary>
+      <description>Only count time when the focused window belongs to a known browser (matched against its WM_CLASS / app id). Prevents false positives such as a code editor with "youtube" in a file name.</description>
+    </key>
+
+    <key name="browser-wm-classes" type="as">
+      <default>['chrome', 'chromium', 'firefox', 'brave', 'edge', 'opera', 'vivaldi', 'librewolf', 'zen', 'epiphany']</default>
+      <summary>Browser WM_CLASS substrings</summary>
+      <description>Case-insensitive substrings matched against the focused window's WM_CLASS / app id. Substring matching keeps multi-profile Chrome windows ("google-chrome (Profile 1)") covered.</description>
+    </key>
+  </schema>
+</schemalist>

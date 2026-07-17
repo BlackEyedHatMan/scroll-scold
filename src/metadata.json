@@ -1,0 +1,10 @@
+{
+  "uuid": "scroll-scold@blackeyedhatman.com",
+  "name": "Scroll Scold",
+  "description": "Scolds you when doomscrolling sites steal too much of your time. Watches the focused browser window and sends an angry-bell notification (with sound) when you spend too long actively on a social media site.",
+  "shell-version": ["46", "47", "48", "49", "50"],
+  "settings-schema": "org.gnome.shell.extensions.scroll-scold",
+  "gettext-domain": "scroll-scold",
+  "url": "https://github.com/BlackEyedHatMan/scroll-scold",
+  "version-name": "1.0"
+}

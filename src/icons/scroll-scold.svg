@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f97316"/>
+      <stop offset="1" stop-color="#dc2626"/>
+    </linearGradient>
+    <linearGradient id="bell" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fde68a"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <!-- rounded-square app background -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#bg)"/>
+  <!-- top loop -->
+  <circle cx="32" cy="13.5" r="3.6" fill="none" stroke="#7c2d12" stroke-width="3"/>
+  <!-- bell body -->
+  <path d="M32 16 C22.5 16 18.5 23 18.5 33 L18.5 38 C18.5 41 16.5 43.5 13.5 45.5 L50.5 45.5 C47.5 43.5 45.5 41 45.5 38 L45.5 33 C45.5 23 41.5 16 32 16 Z"
+        fill="url(#bell)" stroke="#7c2d12" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- clapper -->
+  <circle cx="32" cy="51" r="4.4" fill="#fbbf24" stroke="#7c2d12" stroke-width="2.5"/>
+  <!-- angry face -->
+  <path d="M23.5 23.5 29 26.5" stroke="#7c2d12" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M40.5 23.5 35 26.5" stroke="#7c2d12" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <circle cx="26.5" cy="30.5" r="1.9" fill="#7c2d12"/>
+  <circle cx="37.5" cy="30.5" r="1.9" fill="#7c2d12"/>
+  <path d="M27 39.5 Q32 35.5 37 39.5" stroke="#7c2d12" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+</svg>
