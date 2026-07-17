@@ -132,6 +132,16 @@ print('approaching state at 80%');
     assertEq(e.timerState(), 'approaching', 'approaching at 80%');
 }
 
+print('addTodaySeconds merges persisted totals after async load');
+{
+    const e = makeEngine();
+    run(e, 5, {platform: 'YouTube'}); // accumulated while load was in flight
+    e.addTodaySeconds({'YouTube': 300, 'Reddit': 60});
+    assertEq(e.todaySeconds('YouTube'), 305, 'merged with in-flight seconds');
+    assertEq(e.todaySeconds('Reddit'), 60, 'new platform totals applied');
+    assertEq(e.sessionSeconds('YouTube'), 5, 'session unaffected');
+}
+
 print('resetToday clears sessions and totals');
 {
     const e = makeEngine({todaySeconds: {YouTube: 1234}});

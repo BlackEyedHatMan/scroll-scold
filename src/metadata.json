@@ -6,5 +6,5 @@
   "settings-schema": "org.gnome.shell.extensions.scroll-scold",
   "gettext-domain": "scroll-scold",
   "url": "https://github.com/BlackEyedHatMan/scroll-scold",
-  "version-name": "1.0"
+  "version-name": "1.1"
 }

@@ -120,6 +120,17 @@ export class SessionEngine {
         rec.nextNotifyAtSec = rec.sessionSec + this._thresholdSeconds;
     }
 
+    /**
+     * Merge persisted totals in after an asynchronous load (any seconds
+     * accumulated while the load was in flight are kept).
+     *
+     * @param {Object<string, number>} todaySeconds per-platform totals
+     */
+    addTodaySeconds(todaySeconds) {
+        for (const [name, seconds] of Object.entries(todaySeconds))
+            this._record(name).todaySec += seconds;
+    }
+
     resetToday() {
         for (const rec of this._records.values()) {
             rec.todaySec = 0;

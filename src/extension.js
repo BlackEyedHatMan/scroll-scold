@@ -24,20 +24,21 @@ export default class ScrollScoldExtension extends Extension {
         this._quitIdleId = null;
 
         this._storage = new Storage();
-        let todaySeconds;
-        if (freshLogin) {
-            freshLogin = false;
-            todaySeconds = {};
-            this._storage.save({});
-        } else {
-            todaySeconds = this._storage.load().seconds;
-        }
         this._engine = new SessionEngine({
             thresholdSeconds: this._settings.get_int('threshold-minutes') * 60,
             graceSeconds: this._settings.get_int('grace-seconds'),
             snoozeSeconds: this._settings.get_int('snooze-minutes') * 60,
-            todaySeconds,
         });
+        if (freshLogin) {
+            freshLogin = false;
+            this._storage.save({});
+        } else {
+            // Unlock (not a fresh login): restore today's totals. The load is
+            // async (no blocking IO in shell code); merge whenever it lands.
+            this._storage.load().then(({seconds}) => {
+                this._engine?.addTodaySeconds(seconds);
+            });
+        }
 
         this._notifier = new Notifier({
             settings: this._settings,
