@@ -23,7 +23,7 @@ export function buildPlatformsPage(settings) {
             'any of its keywords. End a keyword with "$" to require it at the end of the title.',
     });
 
-    const addButton = new Gtk.Button({
+    const addButton = new Gtk.MenuButton({
         icon_name: 'list-add-symbolic',
         tooltip_text: 'Add platform',
         valign: Gtk.Align.CENTER,
@@ -123,14 +123,50 @@ export function buildPlatformsPage(settings) {
         });
     };
 
-    addButton.connect('clicked', () => {
+    // "+" menu: re-add any deleted built-in default, or a custom platform.
+    // The defaults come from the schema, so there is one source of truth.
+    const defaultPlatforms = parsePlatforms(
+        settings.get_default_value('platforms').unpack()).platforms;
+
+    const popover = new Gtk.Popover();
+    addButton.set_popover(popover);
+
+    const addPlatform = platform => {
         const platforms = read();
-        platforms.push({
-            name: 'New platform',
-            rules: [{mode: 'contains', value: 'keyword'}],
-        });
+        platforms.push(platform);
         write(platforms);
         rebuild();
+        popover.popdown();
+    };
+
+    popover.connect('show', () => {
+        const box = new Gtk.Box({
+            orientation: Gtk.Orientation.VERTICAL,
+            spacing: 2,
+            margin_top: 6, margin_bottom: 6, margin_start: 6, margin_end: 6,
+        });
+        const existing = new Set(read().map(p => p.name));
+        const missing = defaultPlatforms.filter(d => !existing.has(d.name));
+        for (const preset of missing) {
+            const button = new Gtk.Button({label: preset.name, css_classes: ['flat']});
+            button.get_child()?.set_xalign(0);
+            button.connect('clicked', () => addPlatform({...preset}));
+            box.append(button);
+        }
+        if (missing.length > 0) {
+            box.append(new Gtk.Separator({
+                orientation: Gtk.Orientation.HORIZONTAL,
+                margin_top: 4, margin_bottom: 4,
+            }));
+        }
+        const custom = new Gtk.Button({label: 'Custom platform…', css_classes: ['flat']});
+        custom.get_child()?.set_xalign(0);
+        custom.connect('clicked', () => addPlatform({
+            name: 'New platform',
+            rules: [{mode: 'contains', value: 'keyword'}],
+        }));
+        box.append(custom);
+        popover.set_child(box);
     });
 
     settings.connect('changed::platforms', () => {

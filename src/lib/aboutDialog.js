@@ -7,7 +7,28 @@ import * as ModalDialog from 'resource:///org/gnome/shell/ui/modalDialog.js';
 
 const REPO_URL = 'https://github.com/BlackEyedHatMan/scroll-scold';
 const WEBSITE_URL = 'https://scrollscold.app';
+const FOSS_LINE = 'Free and open source';
 const LICENSE_LINE = 'MIT License — © 2026 Black Eyed Hat Man';
+
+function caption(text, iconName = null) {
+    const row = new St.BoxLayout({
+        style: 'spacing: 6px; margin-top: 6px;',
+        x_align: Clutter.ActorAlign.CENTER,
+    });
+    if (iconName) {
+        row.add_child(new St.Icon({
+            icon_name: iconName,
+            icon_size: 14,
+            y_align: Clutter.ActorAlign.CENTER,
+        }));
+    }
+    row.add_child(new St.Label({
+        text,
+        style: 'font-weight: bold; font-size: 10.5pt;',
+        y_align: Clutter.ActorAlign.CENTER,
+    }));
+    return row;
+}
 
 function linkButton(dialog, url) {
     const button = new St.Button({
@@ -30,7 +51,7 @@ export function showAboutDialog(extension) {
 
     const content = new St.BoxLayout({
         vertical: true,
-        style: 'spacing: 10px; padding: 12px 30px; max-width: 420px;',
+        style: 'spacing: 8px; padding: 12px 30px; max-width: 420px;',
         x_align: Clutter.ActorAlign.CENTER,
     });
 
@@ -56,12 +77,20 @@ export function showAboutDialog(extension) {
     description.clutter_text.line_wrap = true;
     content.add_child(description);
 
+    content.add_child(caption('Star the repo', 'starred-symbolic'));
     content.add_child(linkButton(dialog, REPO_URL));
+
+    content.add_child(caption('See more information at the website'));
     content.add_child(linkButton(dialog, WEBSITE_URL));
 
     content.add_child(new St.Label({
+        text: FOSS_LINE,
+        style: 'font-weight: bold; font-size: 9.5pt; text-align: center; margin-top: 10px;',
+        x_align: Clutter.ActorAlign.CENTER,
+    }));
+    content.add_child(new St.Label({
         text: LICENSE_LINE,
-        style: 'font-size: 9pt; text-align: center; margin-top: 8px;',
+        style: 'font-size: 9pt; text-align: center;',
         opacity: 150,
         x_align: Clutter.ActorAlign.CENTER,
     }));
