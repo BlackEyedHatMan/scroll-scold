@@ -4,6 +4,7 @@ import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 import {IndicatorState} from './lib/constants.js';
+import {parsePlatforms} from './lib/matcher.js';
 import {SessionEngine, EngineEvent} from './lib/sessionEngine.js';
 import {Storage} from './lib/storage.js';
 import {Tracker} from './lib/tracker.js';
@@ -75,7 +76,10 @@ export default class ScrollScoldExtension extends Extension {
                 this._engine.snoozeSeconds = this._settings.get_int('snooze-minutes') * 60;
             }),
             this._settings.connect('changed::platforms', () => {
-                this._indicator?.setPlatforms(this._tracker.platforms);
+                // Parse fresh: the tracker's cached copy may not be updated
+                // yet (its own changed:: handler can run after this one).
+                const {platforms} = parsePlatforms(this._settings.get_string('platforms'));
+                this._indicator?.setPlatforms(platforms);
             }),
         ];
 
