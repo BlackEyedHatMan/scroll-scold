@@ -1,0 +1,49 @@
+name: Release
+
+# Pushing a v* tag builds the extension zip, runs the unit tests, and
+# publishes a GitHub Release with the zip attached.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gjs libglib2.0-bin zip
+
+      - name: Run unit tests
+        run: make test
+
+      - name: Build extension zip
+        run: |
+          glib-compile-schemas src/schemas/
+          cd src
+          zip -r "../scroll-scold@blackeyedhatman.com.shell-extension.zip" .
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Scroll Scold ${{ github.ref_name }}
+          files: scroll-scold@blackeyedhatman.com.shell-extension.zip
+          generate_release_notes: true
+          body: |
+            An angry little bell that scolds you when social media steals too much of your time. 🔔😠
+
+            **Install:** download the zip below, then:
+            ```
+            gnome-extensions install --force scroll-scold@blackeyedhatman.com.shell-extension.zip
+            ```
+            Log out and back in, then:
+            ```
+            gnome-extensions enable scroll-scold@blackeyedhatman.com
+            ```
+            Requires GNOME Shell 46–50 · Website: https://scrollscold.app
