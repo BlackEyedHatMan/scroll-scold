@@ -62,6 +62,14 @@ export function buildGeneralPage(settings, window) {
     // --- Alerts ---
     const alerts = new Adw.PreferencesGroup({title: 'Alerts'});
 
+    const snooze = spinRow({
+        title: 'Snooze duration',
+        subtitle: 'Minutes the "Snooze" notification button delays the next scold',
+        lower: 1, upper: 60,
+    });
+    settings.bind('snooze-minutes', snooze, 'value', Gio.SettingsBindFlags.DEFAULT);
+    alerts.add(snooze);
+
     const mute = new Adw.SwitchRow({
         title: 'Mute alerts',
         subtitle: 'Keep tracking, but skip notifications and sound',

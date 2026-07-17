@@ -19,6 +19,7 @@ export default class ScrollScoldExtension extends Extension {
         this._engine = new SessionEngine({
             thresholdSeconds: this._settings.get_int('threshold-minutes') * 60,
             graceSeconds: this._settings.get_int('grace-seconds'),
+            snoozeSeconds: this._settings.get_int('snooze-minutes') * 60,
             todaySeconds: this._storage.load().seconds,
         });
 
@@ -55,6 +56,9 @@ export default class ScrollScoldExtension extends Extension {
             }),
             this._settings.connect('changed::grace-seconds', () => {
                 this._engine.graceSeconds = this._settings.get_int('grace-seconds');
+            }),
+            this._settings.connect('changed::snooze-minutes', () => {
+                this._engine.snoozeSeconds = this._settings.get_int('snooze-minutes') * 60;
             }),
             this._settings.connect('changed::platforms', () => {
                 this._indicator?.setPlatforms(this._tracker.platforms);

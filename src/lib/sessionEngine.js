@@ -2,7 +2,7 @@
 // `gjs -m tests/testSessionEngine.js`. Time is injected by the caller as
 // per-tick deltas, so tests (and the monotonic-clock strategy) stay simple.
 
-import {APPROACHING_FRACTION, SNOOZE_SECONDS} from './constants.js';
+import {APPROACHING_FRACTION} from './constants.js';
 
 export const EngineEvent = Object.freeze({
     THRESHOLD_CROSSED: 'threshold-crossed',
@@ -14,11 +14,13 @@ export class SessionEngine {
      * @param {object} config
      * @param {number} config.thresholdSeconds continuous-use limit
      * @param {number} config.graceSeconds away time before a session resets
+     * @param {number} config.snoozeSeconds delay after the Snooze action
      * @param {Object<string, number>} [config.todaySeconds] persisted per-platform totals
      */
-    constructor({thresholdSeconds, graceSeconds, todaySeconds = {}}) {
+    constructor({thresholdSeconds, graceSeconds, snoozeSeconds, todaySeconds = {}}) {
         this._thresholdSeconds = thresholdSeconds;
         this._graceSeconds = graceSeconds;
+        this._snoozeSeconds = snoozeSeconds;
         this._records = new Map();
         for (const [name, seconds] of Object.entries(todaySeconds))
             this._record(name).todaySec = seconds;
@@ -53,6 +55,10 @@ export class SessionEngine {
 
     set graceSeconds(seconds) {
         this._graceSeconds = seconds;
+    }
+
+    set snoozeSeconds(seconds) {
+        this._snoozeSeconds = seconds;
     }
 
     /**
@@ -102,10 +108,10 @@ export class SessionEngine {
         return events;
     }
 
-    /** Re-scold this platform in 5 minutes (if still in session). */
+    /** Re-scold this platform after the snooze delay (if still in session). */
     snooze(name) {
         const rec = this._record(name);
-        rec.nextNotifyAtSec = rec.sessionSec + SNOOZE_SECONDS;
+        rec.nextNotifyAtSec = rec.sessionSec + this._snoozeSeconds;
     }
 
     /** Re-scold this platform only after another full threshold of use. */

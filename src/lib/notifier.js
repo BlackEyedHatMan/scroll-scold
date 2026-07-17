@@ -20,7 +20,7 @@ export class Notifier {
         this._settings = settings;
         this._engine = engine;
         this._appIcon = Gio.icon_new_for_string(
-            GLib.build_filenamev([extensionPath, 'icons', 'scroll-scold.svg']));
+            GLib.build_filenamev([extensionPath, 'icons', 'scroll-scold.png']));
         this._defaultSound = GLib.build_filenamev([extensionPath, 'sounds', 'scold.wav']);
         this._source = null;
     }
@@ -59,7 +59,8 @@ export class Notifier {
             gicon: this._appIcon,
             urgency: MessageTray.Urgency.NORMAL,
         });
-        notification.addAction('Snooze 5 min', () => this._engine.snooze(platform));
+        const snoozeMin = this._settings.get_int('snooze-minutes');
+        notification.addAction(`Snooze ${snoozeMin} min`, () => this._engine.snooze(platform));
         notification.addAction('Got it', () => this._engine.acknowledge(platform));
         this._ensureSource().addNotification(notification);
 

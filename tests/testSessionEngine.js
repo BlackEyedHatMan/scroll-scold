@@ -19,6 +19,7 @@ function makeEngine(overrides = {}) {
     return new SessionEngine({
         thresholdSeconds: 900, // 15 min
         graceSeconds: 60,
+        snoozeSeconds: 120, // 2 min
         ...overrides,
     });
 }
@@ -59,13 +60,17 @@ print('re-notify after another full threshold');
     assertEq(cross.length, 1, 're-notified at 2× threshold');
 }
 
-print('snooze re-notifies after 5 minutes');
+print('snooze re-notifies after the configured snooze delay');
 {
     const e = makeEngine();
     run(e, 900, {platform: 'YouTube'});
     e.snooze('YouTube');
-    assertEq(run(e, 299, {platform: 'YouTube'}).length, 0, 'quiet during snooze');
+    assertEq(run(e, 119, {platform: 'YouTube'}).length, 0, 'quiet during snooze');
     assertEq(run(e, 1, {platform: 'YouTube'}).length, 1, 'scolds after snooze');
+    e.snoozeSeconds = 300; // runtime settings change applies to the next snooze
+    e.snooze('YouTube');
+    assertEq(run(e, 299, {platform: 'YouTube'}).length, 0, 'quiet during longer snooze');
+    assertEq(run(e, 1, {platform: 'YouTube'}).length, 1, 'scolds after longer snooze');
 }
 
 print('grace period: short absence only pauses');

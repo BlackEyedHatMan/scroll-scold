@@ -16,6 +16,13 @@
       <description>Continuous active minutes on a platform before Scroll Scold notifies.</description>
     </key>
 
+    <key name="snooze-minutes" type="i">
+      <range min="1" max="60"/>
+      <default>2</default>
+      <summary>Snooze duration in minutes</summary>
+      <description>How long the "Snooze" notification button delays the next scold while you stay on the platform.</description>
+    </key>
+
     <key name="grace-seconds" type="i">
       <range min="5" max="600"/>
       <default>60</default>

@@ -13,8 +13,6 @@ export const IndicatorState = Object.freeze({
 // Fraction of the threshold at which the indicator switches to "approaching".
 export const APPROACHING_FRACTION = 0.8;
 
-export const SNOOZE_SECONDS = 5 * 60;
-
 export const SCOLD_LINES = [
     "That's enough rabbit holes for now. Go do something legendary.",
     'The feed is infinite. Your day is not.',

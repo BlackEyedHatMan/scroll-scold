@@ -12,7 +12,7 @@ Scroll Scold sits in your top bar as an angry little bell. When you spend too lo
 - **Popup menu** showing today's time per platform ("YouTube — 12 / 15 min"), Monitoring and Mute alerts toggles, Reset today, Preferences, and About.
 - **Active-use timing**: the timer for a platform runs only while its tab is focused. Quick tab-flicks can't dodge the scold (a configurable grace period, default 60 s, must pass before the session resets), but genuinely leaving the site does reset it. Repeated short visits never add up to a false scold.
 - **Idle-aware**: no keyboard/mouse input (default 60 s) pauses the timers.
-- **Notification with actions**: *Snooze 5 min* re-scolds five minutes later if you're still there; *Got it* waits a full threshold before scolding again.
+- **Notification with actions**: *Snooze* (configurable, default 2 min) re-scolds shortly after if you're still there; *Got it* waits a full threshold before scolding again.
 - **Sound**: ships with a built-in scold chime; point it at your own audio file in Preferences.
 - **Multiple platforms**: YouTube, X (Twitter), Facebook, Instagram, TikTok, and Reddit are preconfigured; add or edit your own with title keywords.
 - **One global threshold** in minutes (default 15).
@@ -44,6 +44,7 @@ Open settings with the bell menu's **Preferences** (or `gnome-extensions prefs s
 | Setting | Default | Meaning |
 |---|---|---|
 | Time limit | 15 min | Continuous active minutes on a platform before you get scolded |
+| Snooze duration | 2 min | How long the notification's Snooze button delays the next scold |
 | Grace period | 60 s | Time away from a platform before its session timer resets to zero |
 | Idle pause | 60 s | No input for this long pauses the timers |
 | Platforms | YouTube, X, Facebook, Instagram, TikTok, Reddit | Editable; keywords match the tab title. End a keyword with `$` to require it at the end of the title (X uses `/ x$` so a bare "x" can't match everything) |
