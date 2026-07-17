@@ -62,21 +62,23 @@ class ScrollScoldIndicator extends PanelMenu.Button {
         header.add_child(new St.Icon({
             gicon: Gio.icon_new_for_string(GLib.build_filenamev(
                 [this._extension.path, 'icons', 'scroll-scold.png'])),
-            icon_size: 60,
+            icon_size: 40,
+            style: 'margin-right: 10px;',
             y_align: Clutter.ActorAlign.CENTER,
         }));
         header.add_child(new St.Label({
             text: 'Scroll Scold',
-            style: 'font-weight: bold;',
+            style: 'font-weight: bold; margin-right: 10px;',
             x_expand: true,
             y_align: Clutter.ActorAlign.CENTER,
         }));
         const gearButton = new St.Button({
-            style_class: 'button',
+            style_class: 'icon-button',
             can_focus: true,
+            y_align: Clutter.ActorAlign.CENTER,
             child: new St.Icon({
                 icon_name: 'preferences-system-symbolic',
-                icon_size: 14,
+                icon_size: 16,
             }),
         });
         gearButton.connect('clicked', () => {
@@ -110,11 +112,7 @@ class ScrollScoldIndicator extends PanelMenu.Button {
         this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
         this._addActionItem('Preferences', () => this._extension.openPreferences());
-        this._addActionItem('About Scroll Scold', () => {
-            const url = this._extension.metadata.url;
-            if (url)
-                Gio.AppInfo.launch_default_for_uri(url, null);
-        });
+        this._addActionItem('About Scroll Scold', () => this._extension.openAbout());
 
         this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 

@@ -3,6 +3,7 @@ import GLib from 'gi://GLib';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
+import {showAboutDialog} from './lib/aboutDialog.js';
 import {IndicatorState} from './lib/constants.js';
 import {parsePlatforms} from './lib/matcher.js';
 import {SessionEngine, EngineEvent} from './lib/sessionEngine.js';
@@ -103,6 +104,10 @@ export default class ScrollScoldExtension extends Extension {
         this._engine = null;
         this._storage = null;
         this._settings = null;
+    }
+
+    openAbout() {
+        showAboutDialog(this);
     }
 
     /** "Quit" menu item: disable the extension (deferred — the click handler
