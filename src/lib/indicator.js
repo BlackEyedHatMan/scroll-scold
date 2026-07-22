@@ -22,6 +22,10 @@ class ScrollScoldIndicator extends PanelMenu.Button {
      */
     _init({extension, settings, engine, onResetToday}) {
         super._init(0.5, 'Scroll Scold');
+        // Match the compact spacing of neighbouring status icons — the theme's
+        // default panel-button hpadding (12px) makes the hover pill noticeably
+        // wider than app-indicator items. (Same fix as DoneWise 4b32070.)
+        this.style = '-natural-hpadding: 6px; -minimum-hpadding: 6px;';
 
         this._extension = extension;
         this._settings = settings;
